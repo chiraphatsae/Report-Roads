@@ -8,22 +8,24 @@ const Topbar = () => {
         <div className='topbar '>
             <div className="topbarWrapper">
                 <div className="topLeft">
-                    <div className="logo">Mui</div>
-                   
+                    <div className="logo">
+                        ระบบบันทึกการตรวจถนน
+                    </div>
+                    <p className="nameProject">road inspection record system</p>
                 </div>
-               
+
                 <div className="topRight">
                     <div className="topbarIconsContainer">
-                        <NotificationsNoneIcon/>
+                        <NotificationsNoneIcon />
                         <span className="topIconBadge">2</span>
                     </div>
                     <div className="topbarIconsContainer ">
-                        <LanguageIcon/>
+                        <LanguageIcon />
                         <span className="topIconBadge">2</span>
                     </div>
                     <div className="topbarIconsContainer">
-                        <SettingsIcon/>
-                       
+                        <SettingsIcon />
+
                     </div>
                     <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
                 </div>
