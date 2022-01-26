@@ -1,72 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+///Component
 import './sidebar.css'
-import LineStyleIcon from '@mui/icons-material/LineStyle';
-import TimelineIcon from '@mui/icons-material/Timeline';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
-import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
-import EqualizerRoundedIcon from '@mui/icons-material/EqualizerRounded';
-import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
-import GradingOutlinedIcon from '@mui/icons-material/GradingOutlined';
-import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+///Icon
+import { MdOutlineSubject, MdOutlineAssignment, MdOutlineBuild, MdOutlinePrint, MdLogin, MdLogout } from 'react-icons/md'
+/// Link
+import { Link, } from "react-router-dom";
+
 const Sidebar = () => {
-    return <div className='sidebar '>
-        <div className="sidebarWrapper">
-            <div className="sidebarMenu">
-                <h3 className="sidebarTitle">Dashboard  </h3>
-                <ul className="sidebarList">
-                    <li className="sidebarListItem active">
-                        <LineStyleIcon className="sidebarIcon"/>
-                        หน้าหลัก
-                    </li>
-                    <li className="sidebarListItem">
-                        <TimelineIcon className="sidebarIcon" />
-                        Analytics
-                    </li>
-                    <li className="sidebarListItem">
-                        <TrendingUpIcon className="sidebarIcon" />
-                        Sales
-                    </li>
-                </ul>
-                <h3 className="sidebarTitle">Quick Menu  </h3>
-                <ul className="sidebarList">
-                    <li className="sidebarListItem ">
-                        <PersonOutlineIcon className="sidebarIcon"/>
-                        Users
-                    </li>
-                    <li className="sidebarListItem">
-                        <Inventory2OutlinedIcon className="sidebarIcon"/>
-                        Product
-                    </li>
-                    <li className="sidebarListItem">
-                        <AttachMoneyOutlinedIcon className="sidebarIcon"/>
-                        Transaction
-                    </li>
-                    <li className="sidebarListItem">
-                        <EqualizerRoundedIcon className="sidebarIcon"/>
-                        Report
-                    </li>
-                </ul>
-                <h3 className="sidebarTitle">Notifications </h3>
-                <ul className="sidebarList">
-                    <li className="sidebarListItem ">
-                        <MailOutlineRoundedIcon className="sidebarIcon"/>
-                        Mail
-                    </li>
-                    <li className="sidebarListItem">
-                        <GradingOutlinedIcon className="sidebarIcon"/>
-                        Feedback
-                    </li>
-                    <li className="sidebarListItem">
-                        <ForumOutlinedIcon className="sidebarIcon"/>
-                        Messages
-                    </li>
-                   
-                </ul>
+    let path = window.location.pathname;
+    const logedIn = JSON.parse(localStorage.getItem('persit/Root')) ? JSON.parse(localStorage.getItem('persit/Root')) : ""
+    console.log(path)
+    const onLogOut = () => {
+        localStorage.removeItem("persit/Root")
+        document.location.href = "/"
+    }
+    return (
+
+        <div className='sidebar '>
+            <div className="sidebarWrapper mar">
+                <div className="sidebarMenu">
+                    <h3 className="sidebarTitle fw-bold m-0 ">Dashboard </h3>
+                    <ul className="sidebarList m-0 ">
+
+                        <li className="sidebarListItem ">
+                            <Link to="/"   >
+                                <span className={path === '/' ? 'active' : ''}>
+                                    <MdOutlineSubject className="sidebarIcon" />
+                                    หน้าหลัก
+                                </span>
+                            </Link>
+
+                        </li>
+                    </ul>
+                    {logedIn &&
+                        <>
+                            <h3 className="sidebarTitle fw-bold m-0 ">Menu </h3>
+                            <ul className="sidebarList m-0 ">
+                                <li className="sidebarListItem ">
+                                    <Link to="/">
+                                        <MdOutlineAssignment className="sidebarIcon" />
+                                        บันทึกการตรวจถนน
+                                    </Link>
+
+                                </li>
+
+                                <li className="sidebarListItem">
+                                    <MdOutlineBuild className="sidebarIcon" />
+                                    แก้ไขรายการบันทึก
+                                </li>
+                            </ul>
+                            <h3 className="sidebarTitle fw-bold m-0 ">Report </h3>
+                            <ul className="sidebarList m-0 ">
+                                <li className="sidebarListItem ">
+                                    <MdOutlinePrint className="sidebarIcon " />
+                                    พิมพ์รายการตรวจถนน
+                                </li>
+                            </ul>
+                        </>
+                    }
+                    <h3 className="sidebarTitle fw-bold m-0 ">Login </h3>
+                    <ul className="sidebarList m-0 ">
+                        <li className="sidebarListItem ">
+                            {
+                                logedIn ?
+                                    <Link onClick={() => onLogOut()}>
+                                        <MdLogout className="sidebarIcon" />Log Out
+                                    </Link>
+                                    :
+
+                                    <Link to="/auth/login" >
+                                        <span className={path === '/auth/login' ? 'active' : ''}>
+                                            <MdLogin className="sidebarIcon" />Log In
+                                        </span>
+                                    </Link>
+                            }
+
+                        </li>
+                    </ul>
+                </div>
+                <div className='newProjectButton '> + เพิ่ม / Add New </div>
+                <div className='mainCredit mt-3'>road inspection record system</div>
+                <div className='secCredit '>© 2021 All Rights Reserved</div>
+                <div className="endCredit ">Made by <span className='text-pink'>Chiraphat Worrawiwatmethakul </span></div>
             </div>
         </div>
-    </div>;
+
+    )
 };
 
 export default Sidebar;

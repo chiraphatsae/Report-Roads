@@ -1,9 +1,8 @@
 import React from 'react';
 import './topbar.css'
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import LanguageIcon from '@mui/icons-material/Language';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { MdOutlineNotifications, MdOutlineLanguage } from "react-icons/md";
 const Topbar = () => {
+    const logedIn = JSON.parse(localStorage.getItem('persit/Root')) ? JSON.parse(localStorage.getItem('persit/Root')) : ""
     return (
         <div className='topbar '>
             <div className="topbarWrapper">
@@ -11,23 +10,26 @@ const Topbar = () => {
                     <div className="logo">
                         ระบบบันทึกการตรวจถนน
                     </div>
-                    <p className="nameProject">road inspection record system</p>
+                    <p className="nameProject m-0 p-0">road inspection record system</p>
                 </div>
 
                 <div className="topRight">
-                    <div className="topbarIconsContainer">
-                        <NotificationsNoneIcon />
-                        <span className="topIconBadge">2</span>
-                    </div>
-                    <div className="topbarIconsContainer ">
-                        <LanguageIcon />
-                        <span className="topIconBadge">2</span>
-                    </div>
-                    <div className="topbarIconsContainer">
-                        <SettingsIcon />
+                    {
+                        logedIn &&
+                        <>
+                            <div className="topbarIconsContainer">
+                                <MdOutlineLanguage />
+                                <span className="topIconBadge">2</span>
+                            </div>
+                            <div className="topbarIconsContainer ">
+                                <MdOutlineNotifications />
+                                <span className="topIconBadge">2</span>
+                            </div>
+                            <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
+                            <div className="topName ">{logedIn.fname} {logedIn.lname}</div>
+                        </>
+                    }
 
-                    </div>
-                    <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
                 </div>
             </div>
         </div>

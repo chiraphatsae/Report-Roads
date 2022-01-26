@@ -1,16 +1,15 @@
 import Sidebar from "./component/sidebar/Sidebar";
 import Topbar from "./component/topbar/Topbar";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './app.css'
-
+import Routing from "./Routing";
 function App() {
   return (
-    <div >
+    <div  >
       <Topbar />
-      <div className="container">
-        <Sidebar />
-        <div className="others">other pages</div>
-      </div>
+      <div ><Routing /></div>
     </div>
+
   );
 }
 

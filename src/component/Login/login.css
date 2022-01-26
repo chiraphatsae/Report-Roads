@@ -1,0 +1,70 @@
+body {
+    align-items: center!important;
+
+  }
+  
+  .form-signin {
+    width: 100%!important;
+    max-width: 330px!important;
+    padding: 15px!important;
+    margin: auto!important;
+  }
+  
+  .form-signin .checkbox {
+    font-weight: 400!important;
+  }
+  
+  .form-signin .form-floating:focus-within {
+    z-index: 2!important;
+  
+  
+  }
+  
+  .form-signin .form-floating>label {
+    color: #646464!important;
+  }
+  
+  .form-signin input[type="email"] {
+    margin-bottom: -1px!important;
+    border-bottom-right-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+  }
+  
+  .form-signin input[type="password"] {
+    margin-bottom: 10px!important;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+  
+  }
+  
+  .form-signin input[type="text"] {
+    margin-bottom: 10px!important;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+  
+  }
+  
+ 
+  .form-control:focus {
+      color: #212529 !important;
+      background-color: #fff!important;
+      border-color: #6c5ce7 !important;
+      outline: 0!important;
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0) !important;
+  }
+  
+  .fw-500{
+    font-weight: 500 !important;
+  }
+  .w-full {
+    width: 100%!important;
+  }
+  .relative {
+    position: relative!important;
+  }
+  .min-h-screen {
+    min-height: 100vh!important;
+  }
+  .h-screen {
+    height: 100vh!important;
+  }
