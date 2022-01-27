@@ -1,0 +1,24 @@
+.notLogIn{
+    margin-top: 50px !important;
+    margin-left: 40px !important;
+    margin-right: 40px !important;
+
+}
+
+.mainText{
+    color: #2f3542 !important;
+
+    font-size: 35px
+}
+.secText{
+    color: #2f3542;
+    font-size: 16px;
+}
+
+.subText{
+    color: #57606f !important
+}
+.fs-70 {
+    font-size: 50px;
+    color: #6c5ce7;
+}
