@@ -4,12 +4,11 @@ import './sidebar.css'
 ///Icon
 import { MdOutlineSubject, MdOutlineAssignment, MdOutlineBuild, MdOutlinePrint, MdLogin, MdLogout } from 'react-icons/md'
 /// Link
-import { Link, } from "react-router-dom";
+import { Link, useLocation, } from "react-router-dom";
 
 const Sidebar = () => {
-    let path = window.location.pathname;
+    const location = useLocation()
     const logedIn = JSON.parse(localStorage.getItem('persit/Root')) ? JSON.parse(localStorage.getItem('persit/Root')) : ""
-    console.log(path)
     const onLogOut = () => {
         localStorage.removeItem("persit/Root")
         document.location.href = "/"
@@ -24,7 +23,7 @@ const Sidebar = () => {
 
                         <li className="sidebarListItem ">
                             <Link to="/"   >
-                                <span className={path === '/' ? 'active' : ''}>
+                                <span className={location.pathname === '/' ? 'active' : ''}>
                                     <MdOutlineSubject className="sidebarIcon" />
                                     หน้าหลัก
                                 </span>
@@ -37,16 +36,21 @@ const Sidebar = () => {
                             <h3 className="sidebarTitle fw-bold m-0 ">Menu </h3>
                             <ul className="sidebarList m-0 ">
                                 <li className="sidebarListItem ">
-                                    <Link to="/">
-                                        <MdOutlineAssignment className="sidebarIcon" />
-                                        บันทึกการตรวจถนน
+                                    <Link to="/form/createInspect"   >
+                                        <span className={location.pathname === '/form/createInspect' ? 'active' : ''}>
+                                            <MdOutlineAssignment className="sidebarIcon" />
+                                            บันทึกการตรวจถนน
+                                        </span>
                                     </Link>
-
                                 </li>
 
                                 <li className="sidebarListItem">
-                                    <MdOutlineBuild className="sidebarIcon" />
-                                    แก้ไขรายการบันทึก
+                                    <Link to="/form/editInspect"   >
+                                        <span className={location.pathname === '/form/editInspect' ? 'active' : ''}>
+                                            <MdOutlineBuild className="sidebarIcon" />
+                                            แก้ไขรายการบันทึก
+                                        </span>
+                                    </Link>
                                 </li>
                             </ul>
                             <h3 className="sidebarTitle fw-bold m-0 ">Report </h3>
@@ -69,7 +73,7 @@ const Sidebar = () => {
                                     :
 
                                     <Link to="/auth/login" >
-                                        <span className={path === '/auth/login' ? 'active' : ''}>
+                                        <span className={location.pathname === '/auth/login' ? 'active' : ''}>
                                             <MdLogin className="sidebarIcon" />Log In
                                         </span>
                                     </Link>

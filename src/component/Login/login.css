@@ -45,14 +45,21 @@ body {
   }
   
  
-  .form-control:focus {
+  .form-signin .input-group .form-control:focus {
       color: #212529 !important;
-      background-color: #fff!important;
+      background-color: #fff !important;
       border-color: #6c5ce7 !important;
       outline: 0!important;
       box-shadow: 0 0 0 0 rgba(255, 255, 255, 0) !important;
   }
   
+  .form-signin .form-floating .form-control:focus {
+    color: #212529 !important;
+    background-color: #fff !important;
+    border-color: #6c5ce7 !important;
+    outline: 0!important;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0) !important;
+}
   .fw-500{
     font-weight: 500 !important;
   }

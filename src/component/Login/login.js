@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { HiMail, HiLockClosed } from 'react-icons/hi'
 import { useForm } from "react-hook-form";
-import {useHistory} from 'react-router-dom'
 import './login.css'
-import { Redirect } from 'react-router-dom';
 
 const Login = () => {
     const [PassTogle, setPassTogle] = useState(false)
