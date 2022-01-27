@@ -67,7 +67,7 @@ const Sidebar = () => {
                         <li className="sidebarListItem ">
                             {
                                 logedIn ?
-                                    <Link onClick={() => onLogOut()}>
+                                    <Link to="" onClick={() => onLogOut()}>
                                         <MdLogout className="sidebarIcon" />Log Out
                                     </Link>
                                     :
