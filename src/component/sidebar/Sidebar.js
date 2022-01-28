@@ -82,7 +82,7 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </div>
-                <div className='newProjectButton '> + เพิ่ม / Add New </div>
+                <div className='newProjectButton btn-pink'> + เพิ่ม / Add New </div>
                 <div className='mainCredit mt-3'>road inspection record system</div>
                 <div className='secCredit '>© 2021 All Rights Reserved</div>
                 <div className="endCredit ">Made by <span className='text-pink'>Chiraphat Worrawiwatmethakul </span></div>
