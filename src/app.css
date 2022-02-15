@@ -6,6 +6,7 @@
 .others {
   flex: 4;
   height: calc(100vh - 91.5px);
+  overflow-y: scroll;
 
 }
 
@@ -112,6 +113,7 @@ body {
   }
 
 }
+
 .btn-danger-light {
   background-color: #ffdcda;
   border-color: #ffdcda;
@@ -122,6 +124,7 @@ body {
   background-color: #FF4C41;
   color: white;
 }
+
 .btn-primary-light {
   background-color: #e1e7fc;
   border-color: #e1e7fc;
@@ -134,6 +137,17 @@ body {
   border-color: #2953E8;
 }
 
+.btn-success-light {
+  background-color: #e1fce2;
+  border-color: #e1fcea;
+  color: #56e829;
+}
+
+.btn-primary-light:hover {
+  color: #fff;
+  background-color: #2953E8;
+  border-color: #2953E8;
+}
 
 .topName {
   margin-left: 10px;
@@ -158,10 +172,64 @@ body {
   outline: 0 !important;
   box-shadow: 0 0 0 0 rgba(255, 255, 255, 0) !important;
 }
-.date-badge{
+
+.date-badge {
   font-size: 20px !important;
   color: #494949;
 }
-.fs-16{
+
+.fs-16 {
   font-size: 16px;
+}
+
+.dataResult {
+  margin-top: 5px;
+  width: 100%;
+  height: 80px;
+  background-color: ffff;
+  /* border: 1px solid #f0f1f5; */
+  color: #272727;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
+  overflow: hidden;
+  overflow-y: auto;
+  border-radius: 15px;
+}
+
+.dataResult::-webkit-scrollbar {
+  display: none;
+}
+
+.dataResult .dataItem {
+  width: 100%;
+  height: 47px;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  z-index: 999;
+  background-color: rgb(253, 253, 253);
+  /* color: #b1b1b1; */
+}
+
+.dataItem p {
+  margin-left: 20px;
+  font-size: 15px;
+}
+
+.dataItem {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dataItem:hover {
+  background-color: rgb(245, 245, 245);
+  color: #6c5ce7;
+}
+.closeButton{
+  cursor: pointer;
+  font-size: 16px !important;
+
+  color : red
+}
+.closeButton:hover{
+   color: rgb(199, 15, 15); 
 }
