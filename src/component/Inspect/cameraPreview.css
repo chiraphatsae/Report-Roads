@@ -1,0 +1,15 @@
+.mainCamera{
+    background-color: black !important;
+    width:100%;
+    height: 100%;
+    z-index: 9 !important;
+    left: 0px !important;
+    top:  0px !important;
+    opacity: 1;
+
+    position: fixed !important;
+}
+.mainCamera .layoutCamera{
+    opacity: 1;
+    
+}
