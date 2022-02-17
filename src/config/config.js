@@ -1,1 +1,1 @@
-export const obj_rpr_host = "http://localhost:3100/report_road"
+export const obj_rpr_host = "http://localhost:3100/api"

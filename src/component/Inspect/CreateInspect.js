@@ -17,6 +17,8 @@ import Swal from 'sweetalert2'
 const CreateInspect = () => {
     const [districtList, setDistrictList] = useState([])
     const [roadList, setRoadList] = useState([])
+    const [districtId, setDistrictId] = useState("")
+    const [roadId, setRoadId] = useState("")
     ///---errors
     const [topicError, setTopicError] = useState(false)
     const [coNameError, setConameError] = useState(false)
@@ -54,13 +56,17 @@ const CreateInspect = () => {
     }, [])
     const getDistrict = async () => {
         const res = await axios.get(obj_rpr_host + '/district')
-        setDistrictList(res.data)
+        setDistrictList(res.data.data)
+
     }
     ///---getRoad
     const getRoad = async (id) => {
-        console.log(id, "===id====")
-        const res = await axios.get(obj_rpr_host + '/roads/' + id)
-        setRoadList(res.data)
+        setDistrictId(id)
+        const res = await axios.get(obj_rpr_host + '/road/' + id)
+        setRoadList(res.data.data)
+    }
+    const onRoadChnge = (id) => {
+        setRoadId(id)
     }
     ///---Report List 
     const [reportList, setReportList] = useState([])
@@ -71,7 +77,7 @@ const CreateInspect = () => {
             window.alert("กรุณากรอกรายละเอียกก่อนกดเพิ่ม")
         } else {
             let list = [{
-                detail: reportTopic ? reportTopic : "-"
+                topicDetail: reportTopic ? reportTopic : "-"
             }]
             setReportTopic("")
             setReportList([...reportList, ...list])
@@ -88,7 +94,7 @@ const CreateInspect = () => {
         let list = [...reportList]
         const currData = list[index]
         const newData = {
-            detail: type == "reportDetail" ? value : currData.target_name,
+            topicDetail: type == "reportDetail" ? value : currData.target_name,
         }
         list.splice(index, 1, newData)
         setReportList(list);
@@ -125,9 +131,9 @@ const CreateInspect = () => {
         setCoNameList(list)
         console.log(list, "del List =====")
     }
-    console.log(coNameList, "===conameList===")
+
     ///---Submit
-    const onSubmit = data => {
+    const onSubmit = async (data) => {
         if (reportList.length != 0) {
             setTopicError(false)
         } else {
@@ -137,29 +143,32 @@ const CreateInspect = () => {
             setConameError(true)
         }
         const finalData = [{
-            district: data.district,
-            road: data.road,
+            roadId: roadId,
+            districtId: districtId,
+            detailImg: imgDataUri,
             toppic: [...reportList],
-            reporter: [...coNameList],
+            creater: "1339900339334",
 
         }]
         console.log(finalData, "finalData")
-        const status = 200
-        if (status == 200) {
-            Swal.fire({
-                icon: 'success' , 
-                title: 'สำเร็จ 😊',
-                text: 'เพิ่มข้อมูลรายงานเรียบร้อย 📓', 
-               
-            })
-        }else{
-            Swal.fire({
-                icon: 'error' , 
-                title: 'ล้มเหลว 😢',  
-                text: 'ไม่สามารถเพิ่มข้อมูลได้ 📓', 
-               
-            })
-        }
+        // if(reportList.length != 0 ){
+        //     Swal.fire({
+        //         icon: 'success',
+        //         title: 'สำเร็จ 😊',
+        //         text: 'เพิ่มข้อมูลรายงานเรียบร้อย 📓',
+
+        //     })
+        // } else {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'ล้มเหลว 😢',
+        //         text: 'ไม่สามารถเพิ่มข้อมูลได้ 📓',
+
+        //     })
+        // }
+
+
+
 
 
     };
@@ -192,13 +201,13 @@ const CreateInspect = () => {
                             <label>อำเภอ  <span className='text-danger'>*</span></label>
                             <select className="form-control rounded2x bg-light mt-1"
                                 onChange={(event) => getRoad(event.target.value)}
-                                {...register("district", { required: true })}
+
                             >
                                 <option value={""}>กรุณาเลือก</option>
                                 {
                                     districtList.length != 0 ?
                                         districtList.map((val, key) => {
-                                            return <option key={key} value={val.district_Id}>{val.district_Id}.{val.district_Name}</option>
+                                            return <option key={key} value={val.id}>{val.districtName}</option>
                                         }
                                         )
                                         : <option >ไม่สามารถเชื่อมต่อServerได้</option>
@@ -209,14 +218,14 @@ const CreateInspect = () => {
                         <div className="col-lg-12 p-2">
                             <label>สายทาง <span className='text-danger'>*</span></label>
                             <select className="form-control rounded2x bg-light mt-1"
-                                onChange={(event) => getRoad(event.target.value)}
-                                {...register("road", { required: true })}
+                                onChange={(event) => onRoadChnge(event.target.value)}
+                            // {...register("road", { required: true })}
                             >
                                 <option value={""}>กรุณาเลือกอำเภอก่อน </option>
                                 {
                                     roadList.length != 0 ?
                                         roadList.map((val, key) => {
-                                            return <option key={key} value={val.road_id}>{val.road_Name}</option>
+                                            return <option key={key} value={val.id}>{val.roadRoute} {val.roadName} </option>
                                         }
                                         )
                                         : <option >ไม่สามารถเชื่อมต่อServerได้</option>
@@ -233,7 +242,7 @@ const CreateInspect = () => {
                                         return (
                                             <div className="row m-0 p-0" key="index">
                                                 <div className="col-10 ">
-                                                    <input type="text" onChange={(e) => editReportItems(index, e, "reportDetail")} className="form-control bg-light rounded2x mt-2" value={val.detail} />
+                                                    <input type="text" onChange={(e) => editReportItems(index, e, "reportDetail")} className="form-control bg-light rounded2x mt-2" value={val.topicDetail} />
                                                 </div>
                                                 <div className="col-2 d-grid ">
 
