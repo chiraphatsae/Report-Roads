@@ -19,33 +19,11 @@ const CreateInspect = () => {
     const [roadList, setRoadList] = useState([])
     const [districtId, setDistrictId] = useState("")
     const [roadId, setRoadId] = useState("")
+    const [userList, setUserList] = useState([])
     ///---errors
     const [topicError, setTopicError] = useState(false)
     const [coNameError, setConameError] = useState(false)
 
-    const testName = [{
-        id: 1,
-        prefix: "นาย",
-        name: "จิรภัทร",
-        lastname: "วรวิวัฒน์เมธากุล"
-    }, {
-        id: 4,
-        prefix: "นาย",
-        name: "จิรพร",
-        lastname: "เมธากุล"
-    },
-    {
-        id: 2,
-        prefix: "นาง",
-        name: "รัชดาพร",
-        lastname: "ฉายาวรรณ"
-    },
-    {
-        id: 3,
-        prefix: "นาย",
-        name: "อนุชิต",
-        lastname: "พูนทรัพย์"
-    }]
 
     ///react hook form
     const { handleSubmit, register, formState: { errors } } = useForm();
@@ -53,11 +31,16 @@ const CreateInspect = () => {
     ///---getDistrict
     useEffect(() => {
         getDistrict()
+        getUser()
     }, [])
     const getDistrict = async () => {
         const res = await axios.get(obj_rpr_host + '/district')
         setDistrictList(res.data.data)
 
+    }
+    const getUser = async () => {
+        const res = await axios.get(obj_rpr_host + '/users')
+        setUserList(res.data.data)
     }
     ///---getRoad
     const getRoad = async (id) => {
@@ -100,6 +83,7 @@ const CreateInspect = () => {
         setReportList(list);
 
     }
+    console.log(userList, "====>userList <=====")
     ///---Search Co Name
     const [searchName, setSearchName] = useState("")
     const [nameList, setNameList] = useState([]) //ชื่อที่ get มา 
@@ -108,7 +92,7 @@ const CreateInspect = () => {
     //search form database
     const onSearchName = (txt) => {
         setSearchName(txt)
-        const dataName = txt ? testName.filter((val) => val.name.includes(txt)) : []
+        const dataName = txt ? userList.filter((val) => val.firstName.includes(txt)) : []
         if (dataName.length != 0) {
             setNameToolTips(true)
             setNameList(dataName)
@@ -147,10 +131,22 @@ const CreateInspect = () => {
             districtId: districtId,
             detailImg: imgDataUri,
             toppic: [...reportList],
+            reporter: [...coNameList],
             creater: "1339900339334",
-
         }]
+        const url = obj_rpr_host + '/detail'
         console.log(finalData, "finalData")
+        console.log(url , "===url====")
+        if (!topicError && !coNameError) {
+            await axios.post(url, finalData).then((Response) => {
+                console.log(Response, "===>response<===")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'สำเร็จ 😊',
+                    text: 'เพิ่มข้อมูลรายงานเรียบร้อย 📓',
+                })
+            })
+        }
         // if(reportList.length != 0 ){
         //     Swal.fire({
         //         icon: 'success',
@@ -173,189 +169,189 @@ const CreateInspect = () => {
 
     };
 
-    ///---showCamera
-    const [turnOnCam, setTurnOnCam] = useState(false)
-    const [imgDataUri, setImgDataUri] = useState("")
-    const switchCamera = () => {
-        setTurnOnCam(!turnOnCam)
-    }
+        ///---showCamera
+        const [turnOnCam, setTurnOnCam] = useState(false)
+        const [imgDataUri, setImgDataUri] = useState("")
+        const switchCamera = () => {
+            setTurnOnCam(!turnOnCam)
+        }
 
 
-    return (
-        <div className="col-lg-6 col-md-8 col-sm-10 col-10 mx-auto m-5">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-group">
-                    <div className="row bg-white p-4  rounded2x">
-                        <h5 className=" date-badge  ">วันที่  {" "}
-                            <Badge bg="light " className="rounded2x text-dark p-2">
-                                <span className="fs-16">
-                                    {new Date().toLocaleDateString('th-TH', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                    })}
-                                </span>
-                            </Badge>
-                        </h5>
-                        <div className="col-lg-12  p-2">
-                            <label>อำเภอ  <span className='text-danger'>*</span></label>
-                            <select className="form-control rounded2x bg-light mt-1"
-                                onChange={(event) => getRoad(event.target.value)}
+        return (
+            <div className="col-lg-6 col-md-8 col-sm-10 col-10 mx-auto m-5">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="form-group">
+                        <div className="row bg-white p-4  rounded2x">
+                            <h5 className=" date-badge  ">วันที่  {" "}
+                                <Badge bg="light " className="rounded2x text-dark p-2">
+                                    <span className="fs-16">
+                                        {new Date().toLocaleDateString('th-TH', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                        })}
+                                    </span>
+                                </Badge>
+                            </h5>
+                            <div className="col-lg-12  p-2">
+                                <label>อำเภอ  <span className='text-danger'>*</span></label>
+                                <select className="form-control rounded2x bg-light mt-1"
+                                    onChange={(event) => getRoad(event.target.value)}
 
-                            >
-                                <option value={""}>กรุณาเลือก</option>
-                                {
-                                    districtList.length != 0 ?
-                                        districtList.map((val, key) => {
-                                            return <option key={key} value={val.id}>{val.districtName}</option>
-                                        }
-                                        )
-                                        : <option >ไม่สามารถเชื่อมต่อServerได้</option>
-                                }
-                            </select>
-                            {errors.district && <small className="text-danger "> * ต้องเลือก</small>}
-                        </div>
-                        <div className="col-lg-12 p-2">
-                            <label>สายทาง <span className='text-danger'>*</span></label>
-                            <select className="form-control rounded2x bg-light mt-1"
-                                onChange={(event) => onRoadChnge(event.target.value)}
-                            // {...register("road", { required: true })}
-                            >
-                                <option value={""}>กรุณาเลือกอำเภอก่อน </option>
-                                {
-                                    roadList.length != 0 ?
-                                        roadList.map((val, key) => {
-                                            return <option key={key} value={val.id}>{val.roadRoute} {val.roadName} </option>
-                                        }
-                                        )
-                                        : <option >ไม่สามารถเชื่อมต่อServerได้</option>
-                                }
-                            </select>
-                            {errors.road && <small className="text-danger "> * ต้องเลือก</small>}
-                        </div>
-                        <div className="col-lg-12 p-2">
-                            <div className="row">
-                                <label>รายละเอียดปัญหาที่พบ <span className='text-danger'>*</span></label>
-                                {
-                                    reportList.length != 0 &&
-                                    reportList.map((val, index) => {
-                                        return (
-                                            <div className="row m-0 p-0" key="index">
-                                                <div className="col-10 ">
-                                                    <input type="text" onChange={(e) => editReportItems(index, e, "reportDetail")} className="form-control bg-light rounded2x mt-2" value={val.topicDetail} />
-                                                </div>
-                                                <div className="col-2 d-grid ">
-
-                                                    <Button onClick={() => delReport(index)} variant=" btn-danger-light mt-2" className="rounded2x" size="sm">
-                                                        ลบ <span className="font-weight-bold"><HiMinusSm /></span>
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
-
-                                <div className="col-10">
-                                    <input type="text" value={reportTopic} onChange={(event) => setReportTopic(event.target.value)} className="form-control bg-light rounded2x mt-2" />
-                                </div>
-                                <div className="col-2 d-grid ">
-                                    <Button onClick={() => addReport()} variant=" btn-primary-light mt-2" className="rounded2x" size="sm">
-                                        เพิ่ม <span className="font-weight-bold"><HiPlusSm /></span>
-                                    </Button>
-                                </div>
-                                {
-                                    topicError && reportList.length == 0 ? <small className="text-danger "> * กรุณากรอกรายละเอียดปัญหาที่พบ</small> : <></>
-                                }
-                            </div>
-                        </div>
-                        <div className="bg-light rounded2x pt-3 pb-3 mt-2">
-                            <label>ผู้รายงาน<span className='text-danger'>*</span></label>
-                            <div className="row">
-                                <div className="col-12 mt-1">
-                                    <input
-                                        className="form-control rounded2x bg-white mt-1"
-                                        type="text"
-                                        value={searchName}
-                                        onChange={(e) => onSearchName(e.target.value)}
-                                        placeholder="พิมพ์เพื่อค้นหารายชื่อ . . ."
-                                    />
-                                </div>
-                            </div>
-                            {
-                                nameToolTips ?
-                                    <div className="dataResult">
-                                        {
-                                            nameList.length != 0 ? nameList.map((val, index) => {
-                                                return (
-                                                    <div className="dataItem mx-auto" href="#" onClick={() => onAddNameToList(val)} >
-                                                        <p>{index + 1}.{val.prefix}{val.name}  {val.lastname}</p>
-                                                    </div>
-                                                )
-                                            }) : <> </>
-                                        }
-                                    </div>
-                                    : <></>}
-                            {
-                                coNameList.length != 0 ? <div className="mt-2 p-3 bg-white rounded2x">
-                                    <label>รายชื่อผู้รายงาน</label>
-
+                                >
+                                    <option value={""}>กรุณาเลือก</option>
                                     {
-                                        coNameList.length != 0 ? coNameList.map((val, index) => {
-                                            return <div className="row mt-3 m-2">
-                                                <div className="col-10  border-bottom">
-                                                    <p className="p-0 m-0">{index + 1}.{val.prefix} {val.name}   {val.lastname}</p>
+                                        districtList.length != 0 ?
+                                            districtList.map((val, key) => {
+                                                return <option key={key} value={val.id}>{val.districtName}</option>
+                                            }
+                                            )
+                                            : <option >ไม่สามารถเชื่อมต่อServerได้</option>
+                                    }
+                                </select>
+                                {errors.district && <small className="text-danger "> * ต้องเลือก</small>}
+                            </div>
+                            <div className="col-lg-12 p-2">
+                                <label>สายทาง <span className='text-danger'>*</span></label>
+                                <select className="form-control rounded2x bg-light mt-1"
+                                    onChange={(event) => onRoadChnge(event.target.value)}
+                                // {...register("road", { required: true })}
+                                >
+                                    <option value={""}>กรุณาเลือกอำเภอก่อน </option>
+                                    {
+                                        roadList.length != 0 ?
+                                            roadList.map((val, key) => {
+                                                return <option key={key} value={val.id}>{val.roadRoute} {val.roadName} </option>
+                                            }
+                                            )
+                                            : <option >ไม่สามารถเชื่อมต่อServerได้</option>
+                                    }
+                                </select>
+                                {errors.road && <small className="text-danger "> * ต้องเลือก</small>}
+                            </div>
+                            <div className="col-lg-12 p-2">
+                                <div className="row">
+                                    <label>รายละเอียดปัญหาที่พบ <span className='text-danger'>*</span></label>
+                                    {
+                                        reportList.length != 0 &&
+                                        reportList.map((val, index) => {
+                                            return (
+                                                <div className="row m-0 p-0" key="index">
+                                                    <div className="col-10 ">
+                                                        <input type="text" onChange={(e) => editReportItems(index, e, "reportDetail")} className="form-control bg-light rounded2x mt-2" value={val.topicDetail} />
+                                                    </div>
+                                                    <div className="col-2 d-grid ">
+
+                                                        <Button onClick={() => delReport(index)} variant=" btn-danger-light mt-2" className="rounded2x" size="sm">
+                                                            ลบ <span className="font-weight-bold"><HiMinusSm /></span>
+                                                        </Button>
+                                                    </div>
                                                 </div>
-                                                <div className="col-2 text-center  closeButton" onClick={() => onDelCoNameList(index)}>
-                                                    <MdClose />
+                                            )
+                                        })
+                                    }
+
+                                    <div className="col-10">
+                                        <input type="text" value={reportTopic} onChange={(event) => setReportTopic(event.target.value)} className="form-control bg-light rounded2x mt-2" />
+                                    </div>
+                                    <div className="col-2 d-grid ">
+                                        <Button onClick={() => addReport()} variant=" btn-primary-light mt-2" className="rounded2x" size="sm">
+                                            เพิ่ม <span className="font-weight-bold"><HiPlusSm /></span>
+                                        </Button>
+                                    </div>
+                                    {
+                                        topicError && reportList.length == 0 ? <small className="text-danger "> * กรุณากรอกรายละเอียดปัญหาที่พบ</small> : <></>
+                                    }
+                                </div>
+                            </div>
+                            <div className="bg-light rounded2x pt-3 pb-3 mt-2">
+                                <label>คณะผู้ลงสำรวจ<span className='text-danger'>*</span></label>
+                                <div className="row">
+                                    <div className="col-12 mt-1">
+                                        <input
+                                            className="form-control rounded2x bg-white mt-1"
+                                            type="text"
+                                            value={searchName}
+                                            onChange={(e) => onSearchName(e.target.value)}
+                                            placeholder="พิมพ์เพื่อค้นหารายชื่อ . . ."
+                                        />
+                                    </div>
+                                </div>
+                                {
+                                    nameToolTips ?
+                                        <div className="dataResult">
+                                            {
+                                                nameList.length != 0 ? nameList.map((val, index) => {
+                                                    return (
+                                                        <div className="dataItem mx-auto" href="#" onClick={() => onAddNameToList(val)} >
+                                                            <p>{index + 1}.{val.prefix}{val.firstName}  {val.lastName}</p>
+                                                        </div>
+                                                    )
+                                                }) : <> </>
+                                            }
+                                        </div>
+                                        : <></>}
+                                {
+                                    coNameList.length != 0 ? <div className="mt-2 p-3 bg-white rounded2x">
+                                        <label>รายชื่อผู้รายงาน</label>
+
+                                        {
+                                            coNameList.length != 0 ? coNameList.map((val, index) => {
+                                                return <div className="row mt-3 m-2">
+                                                    <div className="col-10  border-bottom">
+                                                        <p className="p-0 m-0">{index + 1}.{val.prefix} {val.firstName}   {val.lastName}</p>
+                                                    </div>
+                                                    <div className="col-2 text-center  closeButton" onClick={() => onDelCoNameList(index)}>
+                                                        <MdClose />
+                                                    </div>
+                                                </div>
+                                            }) : <></>
+                                        }
+                                    </div> : <></>
+                                }
+                            </div>
+                            {
+                                coNameError && coNameList.length == 0 ? <small className="text-danger "> * กรุณาใส่รายชื่อผู้รายงาน</small> : <></>
+                            }
+                            <div className="col-12 text-center mx-auto  mt-3  rounded2x">
+                                {
+                                    imgDataUri ?
+                                        <div className="rounded2x">
+                                            <img src={imgDataUri} width={"100%"} height={"auto"} />
+                                            <div className="col-12  mx-auto takePhoto  " onClick={() => switchCamera()}>
+                                                <div className=" m-0 p-0" style={{ fontSize: "50px" }}>
+                                                    <MdOutlineLinkedCamera />
+                                                </div>
+                                                <div className="m-0 p-0 pb-2">
+                                                    <label>คลิกเพื่อถ่ายรูปใหม่</label>
                                                 </div>
                                             </div>
-                                        }) : <></>
-                                    }
-                                </div> : <></>
-                            }
-                        </div>
-                        {
-                            coNameError && coNameList.length == 0 ? <small className="text-danger "> * กรุณาใส่รายชื่อผู้รายงาน</small> : <></>
-                        }
-                        <div className="col-12 text-center mx-auto  mt-3  rounded2x">
-                            {
-                                imgDataUri ?
-                                    <div className="rounded2x">
-                                        <img src={imgDataUri} width={"100%"} height={"auto"} />
-                                        <div className="col-12  mx-auto takePhoto  " onClick={() => switchCamera()}>
+                                        </div>
+                                        :
+                                        <div className="col-12 rounded2x mx-auto takePhoto  " onClick={() => switchCamera()}>
                                             <div className=" m-0 p-0" style={{ fontSize: "50px" }}>
-                                                <MdOutlineLinkedCamera />
+                                                <MdOutlinePhotoCameraBack />
                                             </div>
                                             <div className="m-0 p-0 pb-2">
-                                                <label>คลิกเพื่อถ่ายรูปใหม่</label>
+                                                <label>คลิกเพื่อถ่ายรูป</label>
                                             </div>
-                                        </div>
-                                    </div>
-                                    :
-                                    <div className="col-12 rounded2x mx-auto takePhoto  " onClick={() => switchCamera()}>
-                                        <div className=" m-0 p-0" style={{ fontSize: "50px" }}>
-                                            <MdOutlinePhotoCameraBack />
-                                        </div>
-                                        <div className="m-0 p-0 pb-2">
-                                            <label>คลิกเพื่อถ่ายรูป</label>
-                                        </div>
 
-                                    </div>
+                                        </div>
+                                }
+                            </div>
+                            {
+                                turnOnCam ? <CameraPreview setTurnOnCam={setTurnOnCam} setImgDataUri={setImgDataUri} /> : <></>
                             }
-                        </div>
-                        {
-                            turnOnCam ? <CameraPreview setTurnOnCam={setTurnOnCam} setImgDataUri={setImgDataUri} /> : <></>
-                        }
-                        <div className="col-12 text-center mt-3 ">
-                            <Button type="submit" className="rounded2x btn-pink" size="md" style={{ width: "200px" }}>
-                                ส่งข้อมูล
-                            </Button>
+                            <div className="col-12 text-center mt-3 ">
+                                <Button type="submit" className="rounded2x btn-pink" size="md" style={{ width: "200px" }}>
+                                    ส่งข้อมูล
+                                </Button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    )
-}
+                </form>
+            </div>
+        )
+    }
 
-export default CreateInspect
+    export default CreateInspect
