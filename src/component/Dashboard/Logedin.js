@@ -5,6 +5,7 @@ import { FaSearch, FaFilter, FaSortAmountDownAlt, FaSortAmountUpAlt } from 'reac
 import { Table } from 'react-bootstrap'
 import { obj_rpr_host } from '../../config/config'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 const Logedin = () => {
     const [sortType, setSortType] = useState(false)
     const [detailList, setDetailList] = useState([])
@@ -36,11 +37,11 @@ const Logedin = () => {
                             <thead className='m-0 p-0'>
                                 <tr className='m-0 p-0'>
                                     <th className='text-pink fs-18'>#</th>
+                                    <th className="text-nowrap text-littleBlack">วันที่ตรวจสอบ</th>
                                     <th className="text-nowrap text-littleBlack">อำเภอ  </th>
                                     <th className="text-nowrap text-littleBlack">รหัสสายทาง</th>
                                     <th className="text-nowrap text-littleBlack">ชื่อสายทาง</th>
-                                    <th className="text-nowrap text-littleBlack">วันที่ตรวจสอบ</th>
-                                    <th className="text-nowrap text-littleBlack">คณะผู้ลงสำรวจ</th>                                  
+                                    <th className="text-nowrap text-littleBlack">คณะผู้ลงสำรวจ</th>
                                     <th className="text-nowrap text-littleBlack">ปัญหา</th>
                                     {/* <th className="text-nowrap text-littleBlack fs-20" onClick={() => onSorted()}>
                                         {
@@ -53,15 +54,17 @@ const Logedin = () => {
                                 {
                                     detailList.length != 0 ? detailList.map((val, index) => {
                                         return (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{val.District.districtName}</td>                                                
-                                                <td>{val.Road.roadRoute}</td>
-                                                <td>{val.Road.roadName}</td>
-                                                <td>{new Date(val.created_at).toLocaleDateString()}</td>
-                                                <td>{val.inspector[0].User.prefix}{val.inspector[0].User.firstName} {val.inspector[0].User.lastName}</td>
-                                                <td>{val.topic[0].topicDetail}</td>
-                                                {/* <td className='fs-14'>
+                                            <Link to="/">
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td><h6 className="text-pink">{new Date(val.created_at).toLocaleDateString()}</h6></td>
+                                                    <td>{val.District.districtName}</td>
+                                                    <td>{val.Road.roadRoute}</td>
+                                                    <td>{val.Road.roadName}</td>
+
+                                                    <td>{val.inspector[0].User.prefix}{val.inspector[0].User.firstName} {val.inspector[0].User.lastName}</td>
+                                                    <td>{val.topic[0].topicDetail}</td>
+                                                    {/* <td className='fs-14'>
                                                     {
                                                         val.inspector.map((valInspect, indexInspec) => {
                                                             return (
@@ -73,7 +76,7 @@ const Logedin = () => {
                                                         })
                                                     }
                                                 </td> */}
-                                                {/* <td>
+                                                    {/* <td>
                                                     {
                                                         val.topic.map((valTopic, indexTopic)=>{
                                                             return(
@@ -84,11 +87,13 @@ const Logedin = () => {
                                                         })
                                                     }
                                                 </td> */}
-                                            </tr>
+                                                </tr>
+                                            </Link>
                                         )
                                     }) :
                                         <tr className='text-center'>
-                                            <td colSpan={5}>
+                                            <td colSpan={7}>
+                                                
                                                 ไม่มีข้อมูล หรือ ไม่สามารถดึงข้อมูลจากเซิฟเวอร์ได้
                                             </td>
                                         </tr>
