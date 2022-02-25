@@ -5,6 +5,7 @@ import './imagePreview.css';
 
 export const ImagePreview = ({ dataUri , isFullscreen }) => {
   let classNameFullscreen = isFullscreen ? 'demo-image-preview-fullscreen' : '';
+  console.log(dataUri)
 
   return (
     <div className={'demo-image-preview ' + classNameFullscreen}>

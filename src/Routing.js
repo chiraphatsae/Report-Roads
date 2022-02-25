@@ -5,6 +5,7 @@ import {
     Route
 } from "react-router-dom";
 import Dashboard from './component/Dashboard';
+import Detail from './component/Detail/Detail';
 import Footer from './component/Footer/Footer';
 import CreateInspect from './component/Inspect/CreateInspect';
 import EditInspect from './component/Inspect/EditInspect';
@@ -29,6 +30,9 @@ const Routing = () => {
                         </Route>
                         <Route path="/form/editInspect" exact>
                             <EditInspect/>
+                        </Route>
+                        <Route path="/detail/:id" exact>
+                            <Detail/>
                         </Route>
                         <Route path="/" exact>
                             <Dashboard />
