@@ -4,18 +4,16 @@ import Summary from './summary'
 import { Table } from 'react-bootstrap'
 import { obj_rpr_host } from '../../config/config'
 import axios from 'axios'
-<<<<<<< HEAD
+
 import { Link } from 'react-router-dom'
-=======
+
 import ReactPaginate from 'react-paginate';
 
 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-<<<<<<< HEAD
+
 import FilterForm from './FilterForm'
-=======
->>>>>>> 23ada00f7a26bb678f1fe661226a4b0f5b5b3e4e
->>>>>>> bf8de58d7a271b101de40880db89f4a30600afe2
+
 const Logedin = () => {
     const [sortType, setSortType] = useState(false)
     const [detailListRaw, setDetailListRaw] = useState([])
@@ -78,14 +76,10 @@ const Logedin = () => {
                             <thead className='m-0 p-0'>
                                 <tr className='m-0 p-0'>
                                     <th className='text-pink fs-18'>#</th>
-                                    <th className="text-nowrap text-littleBlack">วันที่ตรวจสอบ</th>
                                     <th className="text-nowrap text-littleBlack">อำเภอ  </th>
                                     <th className="text-nowrap text-littleBlack">รหัสสายทาง</th>
                                     <th className="text-nowrap text-littleBlack">ชื่อสายทาง</th>
-<<<<<<< HEAD
-=======
                                     <th className="text-nowrap text-littleBlack">วันที่ตรวจสอบ</th>
->>>>>>> 23ada00f7a26bb678f1fe661226a4b0f5b5b3e4e
                                     <th className="text-nowrap text-littleBlack">คณะผู้ลงสำรวจ</th>
                                     <th className="text-nowrap text-littleBlack">ปัญหา</th>
                                     {/* <th className="text-nowrap text-littleBlack fs-20" onClick={() => onSorted()}>
@@ -99,44 +93,7 @@ const Logedin = () => {
                                 {
                                     detailList.length != 0 ? detailList.map((val, index) => {
                                         return (
-<<<<<<< HEAD
-                                            <Link to="/">
-                                                <tr key={index}>
-                                                    <td>{index + 1}</td>
-                                                    <td><h6 className="text-pink">{new Date(val.created_at).toLocaleDateString()}</h6></td>
-                                                    <td>{val.District.districtName}</td>
-                                                    <td>{val.Road.roadRoute}</td>
-                                                    <td>{val.Road.roadName}</td>
-
-                                                    <td>{val.inspector[0].User.prefix}{val.inspector[0].User.firstName} {val.inspector[0].User.lastName}</td>
-                                                    <td>{val.topic[0].topicDetail}</td>
-                                                    {/* <td className='fs-14'>
-                                                    {
-                                                        val.inspector.map((valInspect, indexInspec) => {
-                                                            return (
-                                                                <tr>
-                                                                    <td>{valInspect.User.prefix}{valInspect.User.firstName}  {valInspect.User.lastName}</td>
-                                                                </tr>
-
-                                                            )
-                                                        })
-                                                    }
-                                                </td> */}
-                                                    {/* <td>
-                                                    {
-                                                        val.topic.map((valTopic, indexTopic)=>{
-                                                            return(
-                                                                <tr>
-                                                                    <td>{valTopic.topicDetail}</td>
-                                                                </tr>
-                                                            )
-                                                        })
-                                                    }
-                                                </td> */}
-                                                </tr>
-                                            </Link>
-=======
-
+                                          
                                             <tr className='tr-hover' key={index} onClick={() => onDetailClick(val.id)}>
                                                 <td>{index + 1}</td>
                                                 <td>{val.District.districtName}</td>
@@ -145,18 +102,12 @@ const Logedin = () => {
                                                 <td>{new Date(val.created_at).toLocaleDateString()}</td>
                                                 <td>{val.inspector[0].User.prefix}{val.inspector[0].User.firstName} {val.inspector[0].User.lastName}</td>
                                                 <td>{val.topic[0].topicDetail}</td>
-
                                             </tr>
 
->>>>>>> 23ada00f7a26bb678f1fe661226a4b0f5b5b3e4e
                                         )
                                     }) :
                                         <tr className='text-center'>
                                             <td colSpan={7}>
-<<<<<<< HEAD
-=======
-                                                
->>>>>>> bf8de58d7a271b101de40880db89f4a30600afe2
                                                 ไม่มีข้อมูล หรือ ไม่สามารถดึงข้อมูลจากเซิฟเวอร์ได้
                                             </td>
                                         </tr>
