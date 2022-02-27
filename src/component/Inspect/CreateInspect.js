@@ -176,7 +176,7 @@ const switchCamera = () => {
 
 
 return (
-    <div className="col-lg-6 col-md-8 col-sm-10 col-10 mx-auto m-5">
+    <div className="col-lg-6 col-md-8 col-sm-10 col-10  mx-auto mt-5">
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
                 <div className="row bg-white p-4  rounded2x">

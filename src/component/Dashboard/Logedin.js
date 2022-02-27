@@ -6,11 +6,15 @@ import { obj_rpr_host } from '../../config/config'
 import axios from 'axios'
 import ReactPaginate from 'react-paginate';
 
+
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import FilterForm from './FilterForm'
 const Logedin = () => {
     const [sortType, setSortType] = useState(false)
+    const [detailListRaw, setDetailListRaw] = useState([])
     const [detailList, setDetailList] = useState([])
     const [lengthData, setLengthData] = useState()
+    const [filterToggle, setFilterToggle] = useState(false)
     const history = useHistory()
     useEffect(() => {
         getData()
@@ -18,14 +22,14 @@ const Logedin = () => {
 
     const getData = async () => {
         const res = await axios.get(obj_rpr_host + '/detail')
-       
         setPageCount(Math.ceil(res.data.data.length / perPage))
         setLengthData(res.data.data.length)
         setDetailList(res.data.data.slice(offset, offset + perPage))
-     
+        setDetailListRaw(res.data.data)
+
     }
     const [offset, setOffset] = useState(0);
-    const [perPage] = useState(5);
+    const [perPage] = useState(10);
     const [pageCount, setPageCount] = useState(0)
     const [selectedPage, setSelectedPage] = useState(0)
     const handlePageClick = (e) => {
@@ -35,14 +39,16 @@ const Logedin = () => {
         console.log(e)
 
     };
-    useEffect(()=>{
-
-    },[])
+    useEffect(() => {
+        setDetailList(detailListRaw.slice(offset, offset + perPage))
+        setFilterToggle(false)
+        setLengthData(detailListRaw.length)
+    }, [selectedPage , filterToggle])
     const onDetailClick = (id) => {
         const path = `detail/${id}`
         history.push(path)
     }
-  
+
 
     const onSorted = () => {
         setSortType(!sortType)
@@ -51,12 +57,14 @@ const Logedin = () => {
         // } else {
         //     setProjectAllData(projectAllData.sort((a, b) => new Date(b.create_date).setHours(0, 0, 0, 0) - new Date(a.create_date).setHours(0, 0, 0, 0)))
         // }
-
     }
+
+
     return (
         <div className="container-fluid mt-3">
             <Summary />
             <div className="bg-white pt-2 pr-0 pb-0 rounded mt-2 ">
+                <FilterForm detailListRaw={detailListRaw} setDetailListRaw={setDetailListRaw} setSelectedPage={setSelectedPage} setFilterToggle={setFilterToggle}/>
                 <Table responsive className="text-littleBlack m-0 p-0 " >
                     <div className="dataTables_wrapper className='m-0 p-0'">
                         <table id="example" className="table border-no display dataTablesCard  project-bx m-0 p-0">
@@ -95,22 +103,19 @@ const Logedin = () => {
                                         )
                                     }) :
                                         <tr className='text-center'>
-                                            <td colSpan={5}>
+                                            <td colSpan={7}>
                                                 ไม่มีข้อมูล หรือ ไม่สามารถดึงข้อมูลจากเซิฟเวอร์ได้
                                             </td>
                                         </tr>
                                 }
-
-
                             </tbody>
-
                         </table>
                     </div>
                 </Table>
             </div>
-            <div className="d-flex justify-content-between align-items-center mt-1 pl-2 pr-2">
+            <div className="d-flex justify-content-between align-items-center mt-3 pl-2 pr-2">
                 <div className="dataTables_info">
-                    ข้อมูลทั้งหมด {lengthData} ข้อมูล
+                    ข้อมูลทั้งหมด {lengthData ? lengthData : " 0 "} ข้อมูล
                 </div>
                 <div>
                     <div className="d-flex justify-content-center">

@@ -11,8 +11,9 @@ const Summary = () => {
                         <div className="media-body mr-3">
                             <h2 className="num-text text-black border-radius-0">321</h2>
                         </div>
-                        <div className="bg-light rounded2x p-1">
-                        <h2 className='text-pink' ><FaFileInvoiceDollar /></h2>
+                        <div className="rounded  pl-2 pr-2 p-1" style={{backgroundColor : '#dfddf5'}}>
+                        <h2 className='text-pink'  style={{color : '#6155cc'}} ><FaFileInvoiceDollar /></h2>
+ 
                         </div>
                     </div>
                     <span className="fs-16">โครงการทั้งหมด</span>
@@ -26,8 +27,8 @@ const Summary = () => {
                         <div className="media-body mr-3">
                             <h2 className="num-text text-black border-radius-0">321</h2>
                         </div>
-                        <div className="bg-light rounded2x p-1">
-                        <h2 className='text-pink' ><FaPenNib /></h2>
+                        <div className="rounded  pl-2 pr-2 p-1" style={{backgroundColor : '#cceaea'}}>
+                        <h2 className='text-pink'  style={{color : '#3ec8bc'}} ><FaPenNib /></h2>
                         </div>
                     </div>
                     <span className="fs-16">รายงานทั้งหมด</span>
@@ -41,8 +42,9 @@ const Summary = () => {
                         <div className="media-body mr-3">
                             <h2 className="num-text text-black border-radius-0">321</h2>
                         </div>
-                        <div className="bg-light rounded2x p-1">
-                        <h2 className='text-pink' ><FaStar /></h2>
+                        <div className="rounded  pl-2 pr-2 p-1" style={{backgroundColor : '#fde4e4'}}>
+                        <h2 className='text-pink'  style={{color : '#f77777'}} ><FaStar /></h2>
+
                         </div>
                     </div>
                     <span className="fs-16">โครงการทั้งหมด</span>
@@ -56,8 +58,9 @@ const Summary = () => {
                         <div className="media-body mr-3">
                             <h2 className="num-text text-black border-radius-0">321</h2>
                         </div>
-                        <div className="bg-light rounded2x p-1">
-                        <h2 className='text-pink' ><FaCheck /></h2>
+                        <div className="rounded  pl-2 pr-2 p-1" style={{backgroundColor : '#f3e1d8'}}>
+                        <h2 className='text-pink'  style={{color : '#fe9c5e'}} ><FaCheck /></h2>
+                       
                         </div>
                     </div>
                     <span className="fs-16">โครงการทั้งหมด</span>
